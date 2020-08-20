@@ -1,0 +1,26 @@
+= run-no-shm
+
+A simple script + wrapper to get chrome work over `ssh -X`. To do that it
+disables the MIT-SHM extension of the X Server.
+
+Code taken from here: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=949440
+Written by: Paul Szabo <paul.szabo@sydney.edu.au>
+
+== Building and Run
+
+[source,sh]
+-----------------------------------------------------------------------------
+cc -shared -o XlibNoSHM.so XlibNoSHM.c
+LD_PRELOAD='libdl.so ./XlibNoSHM.so' chromium
+-----------------------------------------------------------------------------
+
+== Wrapper Script
+
+A wrapper python3 script is available to both compile and start things without
+the MIT-SHM extension, that will compile the `.so` file on demand:
+
+[source,sh]
+-----------------------------------------------------------------------------
+run-no-shm google-chrome
+-----------------------------------------------------------------------------
+
